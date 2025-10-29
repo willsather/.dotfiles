@@ -68,16 +68,22 @@ check_stow() {
 
 # install oh-my-zsh if not present
 install_oh_my_zsh() {
-    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-        log_info "installing oh-my-zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    local zsh_config_dir="$HOME/.dotfiles/zsh/config"
+    local oh_my_zsh_dir="$zsh_config_dir/.oh-my-zsh"
+
+    # create config directory if it doesn't exist
+    mkdir -p "$zsh_config_dir"
+
+    if [[ ! -d "$oh_my_zsh_dir" ]]; then
+        log_info "installing oh-my-zsh to $oh_my_zsh_dir..."
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$oh_my_zsh_dir"
         log_success "oh-my-zsh installed successfully"
     else
         log_info "oh-my-zsh is already installed"
     fi
 
     # install zsh-autosuggestions plugin
-    local autosuggestions_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+    local autosuggestions_dir="$oh_my_zsh_dir/custom/plugins/zsh-autosuggestions"
     if [[ ! -d "$autosuggestions_dir" ]]; then
         log_info "installing zsh-autosuggestions plugin..."
         git clone https://github.com/zsh-users/zsh-autosuggestions "$autosuggestions_dir"

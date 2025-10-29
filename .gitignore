@@ -25,6 +25,9 @@ Thumbs.db
 zsh/.zshrc.local
 git/.gitconfig.local
 
+# Zsh generated files and configuration
+zsh/config/
+
 # Stow generated files
 .stow-*
 
