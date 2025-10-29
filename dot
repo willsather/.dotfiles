@@ -8,6 +8,9 @@ set -e
 DOTFILES_DIR="$HOME/.dotfiles"
 BREWFILE="$DOTFILES_DIR/Brewfile"
 
+# global verbose flag
+VERBOSE=false
+
 # source shared logging utilities
 source "$DOTFILES_DIR/utils/log.sh"
 
@@ -23,7 +26,11 @@ check_macos() {
 install_homebrew() {
     if ! command -v brew &> /dev/null; then
         log_info "installing homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        if [[ "$VERBOSE" == true ]]; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &> /dev/null
+        fi
 
         # add homebrew to path for apple silicon macs
         if [[ $(uname -m) == "arm64" ]]; then
@@ -41,7 +48,11 @@ install_homebrew() {
 check_stow() {
     if ! command -v stow &> /dev/null; then
         log_info "gnu stow not found, installing..."
-        brew install stow
+        if [[ "$VERBOSE" == true ]]; then
+            brew install stow
+        else
+            brew install stow &> /dev/null
+        fi
     fi
 }
 
@@ -109,7 +120,11 @@ install_packages() {
     cd "$DOTFILES_DIR"
 
     if [[ -f "$BREWFILE" ]]; then
-        brew bundle install --verbose
+        if [[ "$VERBOSE" == true ]]; then
+            brew bundle install --verbose
+        else
+            brew bundle install --quiet
+        fi
         log_success "all packages installed successfully"
     else
         log_error "brewfile not found at $BREWFILE"
@@ -137,7 +152,12 @@ stow_dotfiles() {
 
     log_info "stowing files from ${home_dir} to ${HOME}..."
 
-    if stow -R -v \
+    local stow_flags=(-R)
+    if [[ "$VERBOSE" == true ]]; then
+        stow_flags+=(-v)
+    fi
+
+    if stow "${stow_flags[@]}" \
             --ignore='\.DS_Store' \
             --ignore='\.git' \
             --ignore='\.gitignore' \
@@ -157,7 +177,11 @@ stow_dotfiles() {
 setup_macos() {
     if [[ -f "$DOTFILES_DIR/macos/defaults.sh" ]]; then
         log_info "applying macos defaults..."
-        bash "$DOTFILES_DIR/macos/defaults.sh"
+        if [[ "$VERBOSE" == true ]]; then
+            bash "$DOTFILES_DIR/macos/defaults.sh"
+        else
+            bash "$DOTFILES_DIR/macos/defaults.sh" &> /dev/null
+        fi
     fi
 }
 
@@ -200,7 +224,13 @@ add_package() {
 
     # install the package first
     log_info "installing $package..."
-    if $install_cmd; then
+    if [[ "$VERBOSE" == true ]]; then
+        eval "$install_cmd"
+    else
+        eval "$install_cmd" &> /dev/null
+    fi
+
+    if [[ $? -eq 0 ]]; then
         # add to brewfile
         echo "$entry" >> "$BREWFILE"
         log_success "$package added to brewfile and installed"
@@ -233,7 +263,13 @@ add_mas_app() {
 
     # install the app
     log_info "installing $app_name..."
-    if $install_cmd; then
+    if [[ "$VERBOSE" == true ]]; then
+        eval "$install_cmd"
+    else
+        eval "$install_cmd" &> /dev/null
+    fi
+
+    if [[ $? -eq 0 ]]; then
         echo "$entry" >> "$BREWFILE"
         log_success "$app_name added to brewfile and installed"
     else
@@ -278,7 +314,13 @@ remove_package() {
 
     # remove the package
     log_info "removing $package..."
-    if $uninstall_cmd; then
+    if [[ "$VERBOSE" == true ]]; then
+        eval "$uninstall_cmd"
+    else
+        eval "$uninstall_cmd" &> /dev/null
+    fi
+
+    if [[ $? -eq 0 ]]; then
         # remove from brewfile (escape special characters for sed)
         local escaped_package=$(echo "$package" | sed 's/[[\.*^$()+?{|]/\\&/g')
         sed -i.bak "/\"$escaped_package\"/d" "$BREWFILE"
@@ -318,7 +360,11 @@ cleanup_packages() {
     cd "$DOTFILES_DIR"
 
     if [[ -f "$BREWFILE" ]]; then
-        brew bundle cleanup --force
+        if [[ "$VERBOSE" == true ]]; then
+            brew bundle cleanup --force
+        else
+            brew bundle cleanup --force --quiet
+        fi
         log_success "cleanup complete"
     else
         log_error "brewfile not found"
@@ -331,7 +377,11 @@ dump_brewfile() {
     log_info "generating brewfile from current brew installation..."
     cd "$DOTFILES_DIR"
 
-    brew bundle dump --force --describe
+    if [[ "$VERBOSE" == true ]]; then
+        brew bundle dump --force --describe
+    else
+        brew bundle dump --force --describe &> /dev/null
+    fi
     log_success "brewfile updated with current packages"
     log_info "you can now use 'dot cleanup' to remove any unwanted packages"
 }
@@ -342,7 +392,10 @@ show_help() {
 
 dot: .dotfiles tool
 
-usage: dot <command> [options]
+usage: dot [--verbose|-v] <command> [options]
+
+options:
+    --verbose, -v               show verbose output from brew, stow, and macos commands
 
 commands:
     init                        initialize dotfiles (install all packages, stow configs, setup macos)
@@ -356,8 +409,9 @@ commands:
 
 examples:
     dot init
+    dot --verbose init
     dot add git
-    dot add docker cask
+    dot -v add docker cask
     dot add homebrew/cask-fonts tap
     dot add "Xcode" mas 497799835
     dot remove git
@@ -370,6 +424,27 @@ brewfile location: $BREWFILE
 
 EOF
 }
+
+# parse verbose flag from all arguments
+ARGS=()
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --verbose|-v)
+            VERBOSE=true
+            shift
+            ;;
+        *)
+            ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# pass verbose flag to logging utilities after parsing
+export VERBOSE_LOGGING="$VERBOSE"
+
+# restore arguments without verbose flags
+set -- "${ARGS[@]}"
 
 # main command processing
 case "${1:-help}" in

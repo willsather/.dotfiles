@@ -13,31 +13,34 @@ readonly CYAN='\033[0;36m'
 readonly WHITE='\033[1;37m'
 readonly NC='\033[0m' # No Color
 
+# Verbose mode flag - can be set by calling script
+VERBOSE_LOGGING=${VERBOSE:-false}
+
 # Logging functions
 log_info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
+    echo -e "${BLUE}[INFO]${NC}\t\t$1"
 }
 
 log_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
+    echo -e "${GREEN}[SUCCESS]${NC}\t$1"
 }
 
 log_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
+    echo -e "${YELLOW}[WARNING]${NC}\t$1"
 }
 
 log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
+    echo -e "${RED}[ERROR]${NC}\t$1"
 }
 
 log_debug() {
-    if [[ "${DEBUG:-}" == "1" ]]; then
-        echo -e "${PURPLE}[DEBUG]${NC} $1"
+    if [[ "${DEBUG:-}" == "1" ]] || [[ "$VERBOSE_LOGGING" == true ]]; then
+        echo -e "${PURPLE}[DEBUG]${NC}\t$1"
     fi
 }
 
 log_step() {
-    echo -e "${CYAN}[STEP]${NC} $1"
+    echo -e "${CYAN}[STEP]${NC}\t$1"
 }
 
 log_header() {
@@ -51,7 +54,7 @@ log_progress() {
     local current="$1"
     local total="$2"
     local message="$3"
-    echo -e "${BLUE}[PROGRESS]${NC} ($current/$total) $message"
+    echo -e "${BLUE}[PROGRESS]${NC}\t($current/$total) $message"
 }
 
 # Simple spinner for long-running operations
@@ -78,7 +81,34 @@ log_exec() {
 
     log_debug "Executing: $cmd"
 
-    if eval "$cmd"; then
+    if [[ "$VERBOSE_LOGGING" == true ]]; then
+        if eval "$cmd"; then
+            log_success "$success_msg"
+            return 0
+        else
+            log_error "$error_msg"
+            return 1
+        fi
+    else
+        if eval "$cmd" &> /dev/null; then
+            log_success "$success_msg"
+            return 0
+        else
+            log_error "$error_msg"
+            return 1
+        fi
+    fi
+}
+
+# Execute command silently with only result logging
+log_exec_quiet() {
+    local cmd="$1"
+    local success_msg="${2:-Command executed successfully}"
+    local error_msg="${3:-Command failed}"
+
+    log_debug "Executing (quiet): $cmd"
+
+    if eval "$cmd" &> /dev/null; then
         log_success "$success_msg"
         return 0
     else
