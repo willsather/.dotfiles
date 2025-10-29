@@ -1,6 +1,5 @@
 # zsh configuration directory (keep all generated files organized)
-export ZDOTDIR="$HOME/.dotfiles/zsh"
-export ZSH_CONFIG="$ZDOTDIR/config"
+export ZSH_CONFIG="$HOME/.dotfiles/.zsh"
 
 # create config directories if they don't exist
 [[ ! -d "$ZSH_CONFIG" ]] && mkdir -p "$ZSH_CONFIG"

@@ -68,7 +68,7 @@ check_stow() {
 
 # install oh-my-zsh if not present
 install_oh_my_zsh() {
-    local zsh_config_dir="$HOME/.dotfiles/zsh/config"
+    local zsh_config_dir="$HOME/.dotfiles/.zsh"
     local oh_my_zsh_dir="$zsh_config_dir/.oh-my-zsh"
 
     # create config directory if it doesn't exist
@@ -140,30 +140,38 @@ install_packages() {
 
 # stow all dotfiles
 stow_dotfiles() {
-    log_info "stowing dotfiles..."
-    cd "$DOTFILES_DIR"
+    log_info "stowing configuration files"
 
-    # stow each directory that contains dotfiles
-    for dir in */; do
-        # remove trailing slash for clean directory name
-        dir_name="${dir%/}"
+    if ! command -v stow &> /dev/null; then
+        log_error "gnu stow is not installed"
+        log_info "please install stow via homebrew: brew install stow"
+        return 1
+    fi
 
-        # skip certain directories
-        case "$dir" in
-            bin/|macos/) continue ;;
-            *)
-                if [[ -d "$dir_name" ]]; then
-                    log_info "stowing $dir_name"
-                    if stow -t "$HOME" "$dir_name"; then
-                        log_success "successfully stowed $dir_name"
-                    else
-                        log_error "failed to stow $dir_name"
-                        exit 1
-                    fi
-                fi
-                ;;
-        esac
-    done
+    local home_dir="${DOTFILES_DIR}/home"
+
+    if [[ ! -d "$home_dir" ]]; then
+        log_error "home directory not found at $home_dir"
+        log_info "please create a 'home' directory containing your dotfiles"
+        return 1
+    fi
+
+    log_info "stowing files from ${home_dir} to ${HOME}..."
+
+    if stow -R -v \
+            --ignore='\.DS_Store' \
+            --ignore='\.git' \
+            --ignore='\.gitignore' \
+            --ignore='\.gitmodules' \
+            --ignore='README\.md' \
+            --ignore='LICENSE' \
+            -d "${DOTFILES_DIR}" \
+            -t "${HOME}" home; then
+        log_success "dotfiles stowed successfully"
+    else
+        log_error "failed to stow dotfiles"
+        return 1
+    fi
 }
 
 # run macos defaults

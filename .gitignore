@@ -26,7 +26,7 @@ zsh/.zshrc.local
 git/.gitconfig.local
 
 # Zsh generated files and configuration
-zsh/config/
+.zsh
 
 # Stow generated files
 .stow-*
