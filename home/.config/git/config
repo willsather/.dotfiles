@@ -13,7 +13,7 @@
     gpgsign = true
 
 [core]
-    editor = nvim
+    editor = "nvim -u NONE"
     autocrlf = input
     safecrlf = true
     excludesfile = ~/.gitignore_global
