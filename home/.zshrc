@@ -1,5 +1,11 @@
 # zsh configuration directory (keep all generated files organized)
 export ZSH_CONFIG="$HOME/.dotfiles/.zsh"
+export ZSH_COMPDUMP="$ZSH_CONFIG/.zcompdump"
+export ZSH_CACHE_DIR="$ZSH_CONFIG/cache"
+
+# oh-my-zsh configuration
+export ZSH="$ZSH_CONFIG/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
 
 # create config directories if they don't exist
 [[ ! -d "$ZSH_CONFIG" ]] && mkdir -p "$ZSH_CONFIG"
@@ -22,14 +28,6 @@ setopt HIST_VERIFY              # show command with history expansion to user be
 setopt APPEND_HISTORY           # append to the history file, don't replace it
 setopt INC_APPEND_HISTORY       # save commands are added to the history immediately
 setopt SHARE_HISTORY            # share history between all sessions
-
-# additional zsh configuration paths
-export ZSH_COMPDUMP="$ZSH_CONFIG/.zcompdump"
-export ZSH_CACHE_DIR="$ZSH_CONFIG/cache"
-
-# oh-my-zsh configuration
-export ZSH="$ZSH_CONFIG/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
 
 # plugins
 plugins=(

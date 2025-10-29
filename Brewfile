@@ -63,6 +63,7 @@ brew "awscli"
 
 # browsers
 cask "arc"
+cask "thebrowsercompany-dia"
 cask "google-chrome"
 
 # ide
@@ -70,6 +71,7 @@ cask "visual-studio-code"
 cask "cursor"
 cask "zed"
 cask "bruno"
+cask "httpie-desktop"
 cask "jetbrains-toolbox"
 
 # utilities
@@ -84,10 +86,8 @@ cask "topnotch"
 # apps
 cask "figma"
 cask "slack"
-cask "zoom"
 cask "notion"
 cask "notion-calendar"
-cask "mullvad-vpn"
 
 # mac app store apps
 mas "Xcode", id: 497799835
