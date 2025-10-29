@@ -21,6 +21,22 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
+# helper functions                                                           #
+###############################################################################
+
+# function to set default application for file extension
+set_default_app() {
+    local app_bundle="$1"
+    local extension="$2"
+
+    if command -v duti >/dev/null 2>&1; then
+        duti -s "$app_bundle" "$extension" all
+    else
+        log_info "duti not available, cannot set default for $extension"
+    fi
+}
+
+###############################################################################
 # keyboard configuration                                                     #
 ###############################################################################
 
@@ -165,6 +181,56 @@ defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 # expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+###############################################################################
+# default applications for file extensions                                  #
+###############################################################################
+
+# set zed as default application for development files
+log_info "configuring default applications for file extensions..."
+
+# markdown files
+set_default_app "dev.zed.Zed" ".md"
+
+# typescript/javascript files
+set_default_app "dev.zed.Zed" ".ts"
+set_default_app "dev.zed.Zed" ".tsx"
+set_default_app "dev.zed.Zed" ".js"
+set_default_app "dev.zed.Zed" ".jsx"
+set_default_app "dev.zed.Zed" ".mjs"
+
+# configuration files
+set_default_app "dev.zed.Zed" ".json"
+set_default_app "dev.zed.Zed" ".yaml"
+set_default_app "dev.zed.Zed" ".yml"
+set_default_app "dev.zed.Zed" ".toml"
+set_default_app "dev.zed.Zed" ".xml"
+
+# other development files
+set_default_app "dev.zed.Zed" ".sh"
+set_default_app "dev.zed.Zed" ".py"
+set_default_app "dev.zed.Zed" ".rs"
+set_default_app "dev.zed.Zed" ".go"
+set_default_app "dev.zed.Zed" ".rb"
+set_default_app "dev.zed.Zed" ".php"
+set_default_app "dev.zed.Zed" ".css"
+set_default_app "dev.zed.Zed" ".scss"
+set_default_app "dev.zed.Zed" ".html"
+set_default_app "dev.zed.Zed" ".htm"
+set_default_app "dev.zed.Zed" ".vue"
+set_default_app "dev.zed.Zed" ".svelte"
+
+# configuration and dotfiles
+set_default_app "dev.zed.Zed" ".env"
+set_default_app "dev.zed.Zed" ".gitignore"
+set_default_app "dev.zed.Zed" ".gitconfig"
+set_default_app "dev.zed.Zed" ".editorconfig"
+
+# text files
+set_default_app "dev.zed.Zed" ".txt"
+set_default_app "dev.zed.Zed" ".log"
+
+log_success "default applications configured for development files"
 
 ###############################################################################
 # touch id for sudo                                                         #
