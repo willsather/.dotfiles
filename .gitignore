@@ -1,0 +1,45 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*~
+*.swp
+*.swo
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Local customizations (should not be tracked)
+zsh/.zshrc.local
+git/.gitconfig.local
+
+# Stow generated files
+.stow-*
+
+# Homebrew lockfiles (optional - uncomment if you don't want to track them)
+# Brewfile.lock.json
+
+# Personal/private configs that shouldn't be shared
+ssh/.ssh/id_*
+ssh/.ssh/*.pem
+ssh/.ssh/known_hosts
+ssh/.ssh/authorized_keys
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

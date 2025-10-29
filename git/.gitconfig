@@ -1,0 +1,118 @@
+[user]
+    name = willsather
+    email = will@sather.ws
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmRZsvx7oDqmuhKhfNgV/jZCIeZGTtxctPEfIcCsTqC
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+    gpgsign = true
+
+[core]
+    editor = nvim
+    autocrlf = input
+    safecrlf = true
+    excludesfile = ~/.gitignore_global
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[merge]
+    tool = vimdiff
+
+[diff]
+    tool = vimdiff
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    # basic shortcuts from nix config
+    gst = status
+    st = status
+    di = diff
+    co = checkout
+    cm = commit
+    cp = cherry-pick
+    br = branch
+    sta = stash
+
+    # diff shortcuts
+    ds = diff --staged
+
+    # commit shortcuts
+    fixup = commit --fixup
+    squash = commit --squash
+    amend = commit --amend -m
+    amendit = commit --amend --no-edit
+
+    # log aliases from nix config
+    llog = log --date=local
+    flog = log --pretty=fuller --decorate
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lol = log --graph --decorate --oneline
+    lola = log --graph --decorate --oneline --all
+    blog = log origin/master... --left-right
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+
+    # reset aliases
+    unstage = reset HEAD
+    rum = rebase master@{u}
+
+    # misc
+    last = log -1 HEAD
+    visual = !gitk
+    type = cat-file -t
+    dump = cat-file -p
+
+[rerere]
+    enabled = true
+
+[help]
+    autocorrect = 1
+
+[fetch]
+    prune = true
+
+[branch]
+    autosetupmerge = always
+    autosetuprebase = always
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[delta]
+    features = side-by-side
+    navigate = true
+    light = false
