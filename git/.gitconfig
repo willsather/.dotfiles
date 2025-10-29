@@ -1,7 +1,7 @@
 [user]
     name = willsather
     email = will@sather.ws
-    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmRZsvx7oDqmuhKhfNgV/jZCIeZGTtxctPEfIcCsTqC
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILIUDoIhFptSeNyPWrgO22RHlwEE4IzAT7B8EfvHAWiA
 
 [gpg]
     format = ssh
