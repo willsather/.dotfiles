@@ -41,7 +41,17 @@ dot dump                        # generate Brewfile from current system
 .dotfiles/
 ├── dot                       # main command
 ├── Brewfile                  # package definitions
-├── zsh/.zshrc                # shell config (symlinks to ~/.zshrc)
-├── git/.gitconfig            # git config (symlinks to ~/.gitconfig)
-└── macos/defaults.sh         # system preferences
+├── home/                     # dotfiles to be symlinked to home directory
+│   ├── .zshrc                # shell configuration
+│   ├── .claude/              # Claude AI configuration
+│   └── .config/              # XDG config directory
+│       ├── git/              # git configuration
+│       ├── nvim/             # Neovim configuration
+│       └── zed/              # Zed editor configuration
+├── macos/                    # macOS-specific configurations
+│   └── defaults.sh           # system preferences
+├── utils/                    # utility scripts
+│   └── log.sh                # logging utilities
+└── .zsh/                     # ZSH runtime data
+    └── .oh-my-zsh/           # Oh My Zsh installation
 ```
