@@ -31,3 +31,5 @@ lerna-debug.log*
 .next
 .nuxt
 dist
+
+**/.claude/settings.local.json
