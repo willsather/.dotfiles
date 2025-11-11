@@ -16,6 +16,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# Claude IDE
+home/.claude/ide
+
 # Backup files
 *.backup
 *.bak
