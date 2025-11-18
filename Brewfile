@@ -66,12 +66,13 @@ cask "thebrowsercompany-dia"
 cask "google-chrome"
 
 # ide
-cask "visual-studio-code"
 cask "cursor"
+cask "claude-code"
 cask "zed"
 cask "bruno"
 cask "httpie-desktop"
 cask "jetbrains-toolbox"
+cask "visual-studio-code"
 
 # utilities
 cask "ghostty"
@@ -88,9 +89,6 @@ cask "figma"
 cask "slack"
 cask "notion"
 cask "notion-calendar"
-
-# mac app store apps
-mas "Xcode", id: 497799835
 
 # fonts
 cask "font-fira-code-nerd-font"
