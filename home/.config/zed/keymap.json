@@ -6,5 +6,10 @@
       "cmd-2": "git_panel::ToggleFocus",
       "cmd-0": null
     }
+  },
+  {
+    "bindings": {
+      "cmd-shift-c": "editor::CopyFileLocation"
+    }
   }
 ]
