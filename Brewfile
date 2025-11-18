@@ -62,7 +62,6 @@ brew "awscli"
 ##########
 
 # browsers
-cask "arc"
 cask "thebrowsercompany-dia"
 cask "google-chrome"
 
@@ -84,6 +83,7 @@ cask "cleanshot"
 cask "topnotch"
 
 # apps
+cask "affinity"
 cask "figma"
 cask "slack"
 cask "notion"
