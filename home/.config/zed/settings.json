@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "claude": {
+      "default_mode": "bypassPermissions"
+    }
+  },
   "icon_theme": "JetBrains New UI Icons (Dark)",
   "debugger": {
     "dock": "left"
@@ -51,6 +56,12 @@
         ]
       }
     }
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "button": false
   },
   "base_keymap": "JetBrains",
   "ui_font_size": 16,
