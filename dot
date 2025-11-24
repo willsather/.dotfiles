@@ -405,6 +405,7 @@ commands:
     list                        list all managed packages from brewfile
     cleanup                     remove packages not in brewfile (brew bundle cleanup)
     dump                        generate brewfile from currently installed packages
+    upgrade                     upgrade all homebrew packages (brew update && upgrade && cleanup)
     help                        show this help message
 
 examples:
@@ -511,6 +512,17 @@ EOF
         check_macos
         install_homebrew
         dump_brewfile
+        ;;
+    upgrade)
+        check_macos
+        install_homebrew
+        log_info "upgrading all homebrew packages..."
+        if [[ "$VERBOSE" == true ]]; then
+            brew update && brew upgrade && brew cleanup
+        else
+            brew update &> /dev/null && brew upgrade &> /dev/null && brew cleanup &> /dev/null
+        fi
+        log_success "all packages upgraded successfully"
         ;;
     help|--help|-h)
         show_help

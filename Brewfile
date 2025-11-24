@@ -1,3 +1,7 @@
+#### taps
+##########
+tap "oven-sh/bun"
+
 #### brews
 ##########
 
@@ -28,6 +32,7 @@ brew "go"
 brew "rust"
 brew "pnpm"
 brew "uv"
+brew "bun"
 brew "terraform"
 brew "jenv"
 brew "openjdk"
@@ -78,6 +83,7 @@ cask "visual-studio-code"
 cask "ghostty"
 cask "1password"
 cask "1password-cli"
+cask "slack-cli"
 cask "raycast"
 cask "flycut"
 cask "cleanshot"

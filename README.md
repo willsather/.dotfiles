@@ -1,5 +1,13 @@
 # Dotfiles
 
+## Future Install Script
+
+1. Install Brew
+2. Install Xcode Tools
+3. Clone `.dotfiles` repository
+4. Brew Bundle
+5. Build and run `dot`
+
 A simple dotfiles management system for macOS using Homebrew Bundle and GNU Stow.
 
 ## Installation
