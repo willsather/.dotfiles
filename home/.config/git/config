@@ -103,7 +103,7 @@
     prune = true
 
 [branch]
-    autosetupmerge = always
+    autosetupmerge = simple
     autosetuprebase = always
 
 [filter "lfs"]
