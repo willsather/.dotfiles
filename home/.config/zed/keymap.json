@@ -1,15 +1,18 @@
 [
   {
+    // global context user bindings
+    "bindings": {
+      "cmd-shift-c": "editor::CopyFileLocation",
+      "cmd-shift-n": "workspace::NewWindow",
+      "cmd-j": "workspace::ToggleBottomDock"
+    }
+  },
+  {
     "context": "Workspace",
     "use_key_equivalents": true,
     "bindings": {
       "cmd-2": "git_panel::ToggleFocus",
       "cmd-0": null
-    }
-  },
-  {
-    "bindings": {
-      "cmd-shift-c": "editor::CopyFileLocation"
     }
   }
 ]
