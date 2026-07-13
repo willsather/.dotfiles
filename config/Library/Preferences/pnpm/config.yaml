@@ -1,0 +1,4 @@
+# block packages published less than 2 days ago to blunt supply-chain attacks
+minimumReleaseAge: 2880
+minimumReleaseAgeExclude:
+  - '@repo/*'

@@ -1,6 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "vercel-plugin@vercel-vercel-plugin": true,
+    "vercel@claude-plugins-official": true
+  },
+  "preferredNotifChannel": "notifications_disabled",
   "feedbackSurveyState": {
     "lastShownTime": 1754076451149
   },

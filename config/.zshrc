@@ -58,6 +58,9 @@ export LC_ALL="en_US.UTF-8"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.dotfiles:$PATH"
 
+# node
+eval "$(fnm env --use-on-cd --shell zsh)"
+
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
@@ -103,6 +106,11 @@ alias vim="nvim"
 
 # functions
 
+# fx cli wrapper — loads AI_GATEWAY_API_KEY from 1password
+fx() {
+    AI_GATEWAY_API_KEY=$(op read "op://Employee/Vercel Labs AI Gateway Token/credential") command fx "$@"
+}
+
 # killport function from nix config
 killport() {
     for port in "$@"; do
@@ -116,3 +124,12 @@ mkcd() {
 
 # dotfiles management
 export PATH="$HOME/.dotfiles/bin:$PATH"
+
+# Added by Hades
+export PATH="$PATH:$HOME/.hades/bin"
+
+# BEGIN: socket firewall aliases (managed by Iru)
+#alias npm="sfw npm"
+#alias pnpm="sfw pnpm"
+#alias bun="sfw bun"
+# END: socket firewall aliases (managed by Iru)

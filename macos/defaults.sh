@@ -198,6 +198,7 @@ set_default_app "dev.zed.Zed" ".tsx"
 set_default_app "dev.zed.Zed" ".js"
 set_default_app "dev.zed.Zed" ".jsx"
 set_default_app "dev.zed.Zed" ".mjs"
+set_default_app "dev.zed.Zed" ".cjs"
 
 # configuration files
 set_default_app "dev.zed.Zed" ".json"
@@ -205,30 +206,58 @@ set_default_app "dev.zed.Zed" ".yaml"
 set_default_app "dev.zed.Zed" ".yml"
 set_default_app "dev.zed.Zed" ".toml"
 set_default_app "dev.zed.Zed" ".xml"
+set_default_app "dev.zed.Zed" ".csv"
+set_default_app "dev.zed.Zed" ".ini"
+
+# web and markup files
+set_default_app "dev.zed.Zed" ".css"
+set_default_app "dev.zed.Zed" ".scss"
+set_default_app "dev.zed.Zed" ".less"
+set_default_app "dev.zed.Zed" ".html"
+set_default_app "dev.zed.Zed" ".htm"
+set_default_app "dev.zed.Zed" ".mdx"
+set_default_app "dev.zed.Zed" ".svg"
+set_default_app "dev.zed.Zed" ".vue"
+set_default_app "dev.zed.Zed" ".svelte"
+set_default_app "dev.zed.Zed" ".astro"
 
 # other development files
 set_default_app "dev.zed.Zed" ".sh"
+set_default_app "dev.zed.Zed" ".zsh"
 set_default_app "dev.zed.Zed" ".py"
 set_default_app "dev.zed.Zed" ".rs"
 set_default_app "dev.zed.Zed" ".go"
 set_default_app "dev.zed.Zed" ".rb"
 set_default_app "dev.zed.Zed" ".php"
-set_default_app "dev.zed.Zed" ".css"
-set_default_app "dev.zed.Zed" ".scss"
-set_default_app "dev.zed.Zed" ".html"
-set_default_app "dev.zed.Zed" ".htm"
-set_default_app "dev.zed.Zed" ".vue"
-set_default_app "dev.zed.Zed" ".svelte"
+set_default_app "dev.zed.Zed" ".c"
+set_default_app "dev.zed.Zed" ".h"
+set_default_app "dev.zed.Zed" ".cpp"
+set_default_app "dev.zed.Zed" ".swift"
+set_default_app "dev.zed.Zed" ".kt"
+set_default_app "dev.zed.Zed" ".java"
+set_default_app "dev.zed.Zed" ".lua"
+set_default_app "dev.zed.Zed" ".zig"
+set_default_app "dev.zed.Zed" ".nix"
+set_default_app "dev.zed.Zed" ".tf"
+
+# data and query files
+set_default_app "dev.zed.Zed" ".sql"
+set_default_app "dev.zed.Zed" ".graphql"
+set_default_app "dev.zed.Zed" ".gql"
+set_default_app "dev.zed.Zed" ".prisma"
 
 # configuration and dotfiles
 set_default_app "dev.zed.Zed" ".env"
 set_default_app "dev.zed.Zed" ".gitignore"
 set_default_app "dev.zed.Zed" ".gitconfig"
 set_default_app "dev.zed.Zed" ".editorconfig"
+set_default_app "dev.zed.Zed" ".dockerignore"
 
-# text files
+# text and diff files
 set_default_app "dev.zed.Zed" ".txt"
 set_default_app "dev.zed.Zed" ".log"
+set_default_app "dev.zed.Zed" ".diff"
+set_default_app "dev.zed.Zed" ".patch"
 
 log_success "default applications configured for development files"
 

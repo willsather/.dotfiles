@@ -69,6 +69,7 @@ cask "google-chrome"
 # ide
 cask "cursor"
 cask "claude-code"
+cask "conductor"
 cask "zed"
 cask "bruno"
 cask "httpie-desktop"

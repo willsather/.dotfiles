@@ -1,5 +1,10 @@
 - In all interaction and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
 
+## Builds & Linting
+
+- Do **not** rebuild or lint after every single change — only after significant changes (new features, refactors, logic changes, dependency updates)
+- Skip rebuild/lint for trivial edits like styling tweaks, class name changes, copy updates, or small UI adjustments
+
 ## Code Quality Standards
 
 - Make minimal, surgical changes

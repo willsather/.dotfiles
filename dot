@@ -142,15 +142,15 @@ stow_dotfiles() {
         return 1
     fi
 
-    local home_dir="${DOTFILES_DIR}/home"
+    local config_dir="${DOTFILES_DIR}/config"
 
-    if [[ ! -d "$home_dir" ]]; then
-        log_error "home directory not found at $home_dir"
-        log_info "please create a 'home' directory containing your dotfiles"
+    if [[ ! -d "$config_dir" ]]; then
+        log_error "config directory not found at $config_dir"
+        log_info "please create a 'config' directory containing your dotfiles"
         return 1
     fi
 
-    log_info "stowing files from ${home_dir} to ${HOME}..."
+    log_info "stowing files from ${config_dir} to ${HOME}..."
 
     local stow_flags=(-R)
     if [[ "$VERBOSE" == true ]]; then
@@ -165,7 +165,7 @@ stow_dotfiles() {
             --ignore='README\.md' \
             --ignore='LICENSE' \
             -d "${DOTFILES_DIR}" \
-            -t "${HOME}" home; then
+            -t "${HOME}" config; then
         log_success "dotfiles stowed successfully"
     else
         log_error "failed to stow dotfiles"

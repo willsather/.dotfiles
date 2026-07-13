@@ -1,0 +1,13 @@
+minimum-release-age=2880
+minimum-release-age-exclude[]=eve
+minimum-release-age-exclude[]=@ai-sdk/*
+minimum-release-age-exclude[]=@vercel/*
+minimum-release-age-exclude[]=@workflow/*
+minimum-release-age-exclude[]=@turbo/*
+minimum-release-age-exclude[]=ai
+minimum-release-age-exclude[]=turbo
+minimum-release-age-exclude[]=nitro
+minimum-release-age-exclude[]=crossws
+minimum-release-age-exclude[]=env-runner
+minimum-release-age-exclude[]=ocache
+minimum-release-age-exclude[]=experimental-ai-sdk-code-mode
