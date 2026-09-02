@@ -132,9 +132,3 @@ export PATH="$HOME/.dotfiles/bin:$PATH"
 
 # Added by Hades
 export PATH="$PATH:$HOME/.hades/bin"
-
-# BEGIN: socket firewall aliases (managed by Iru)
-#alias npm="sfw npm"
-#alias pnpm="sfw pnpm"
-#alias bun="sfw bun"
-# END: socket firewall aliases (managed by Iru)
