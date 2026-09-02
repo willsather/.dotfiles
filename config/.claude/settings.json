@@ -1,9 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "apiKeyHelper": "op read 'op://Employee/Vercel Labs AI Gateway Token/credential' --no-newline",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://ai-gateway.vercel.sh",
+    "ANTHROPIC_API_KEY": ""
+  },
   "enabledPlugins": {
     "vercel-plugin@vercel-vercel-plugin": true,
     "vercel@claude-plugins-official": true
   },
+  "theme": "dark",
   "preferredNotifChannel": "notifications_disabled",
   "feedbackSurveyState": {
     "lastShownTime": 1754076451149

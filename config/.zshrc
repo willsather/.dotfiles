@@ -111,6 +111,11 @@ fx() {
     AI_GATEWAY_API_KEY=$(op read "op://Employee/Vercel Labs AI Gateway Token/credential") command fx "$@"
 }
 
+# Launch fx in the personal research workspace.
+r() {
+    (cd "$HOME/research" && fx "$@")
+}
+
 # killport function from nix config
 killport() {
     for port in "$@"; do
