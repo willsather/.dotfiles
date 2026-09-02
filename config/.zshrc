@@ -108,7 +108,7 @@ alias vim="nvim"
 
 # fx cli wrapper — loads AI_GATEWAY_API_KEY from 1password
 fx() {
-    AI_GATEWAY_API_KEY=$(op read "op://Employee/Vercel Labs AI Gateway Token/credential") command fx "$@"
+    AI_GATEWAY_API_KEY=$(op read --account vercel.1password.com "op://Employee/Vercel Labs AI Gateway Token/credential") command fx "$@"
 }
 
 # Launch fx in the personal research workspace.
