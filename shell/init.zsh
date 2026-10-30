@@ -7,10 +7,13 @@ _dotfiles_init() {
     if [[ -n "${_DOTFILES_WORK_FX:-}" && "${functions[fx]-}" == "$_DOTFILES_WORK_FX" ]]; then
         unfunction fx
     fi
+    if [[ -n "${_DOTFILES_WORK_FXG:-}" && "${functions[fxg]-}" == "$_DOTFILES_WORK_FXG" ]]; then
+        unfunction fxg
+    fi
     if [[ -n "${_DOTFILES_WORK_CODEX:-}" && "${functions[codex]-}" == "$_DOTFILES_WORK_CODEX" ]]; then
         unfunction codex
     fi
-    unset _DOTFILES_WORK_FX _DOTFILES_WORK_CODEX
+    unset _DOTFILES_WORK_FX _DOTFILES_WORK_FXG _DOTFILES_WORK_CODEX
 
     source "$root/utils/profile.sh" || return
     profile="$(dotfiles_profile)" || return

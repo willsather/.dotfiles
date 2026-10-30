@@ -32,18 +32,31 @@ dot apply
 dot doctor
 ```
 
-Work uses Claude/Codex settings and credential wrappers under `profiles/work/`. Personal does not install those settings or inject work credentials. Automatic work-to-personal switching is refused.
+Work uses Claude/Codex settings and credential wrappers under `profiles/work/`. `fx` runs the native CLI with its own authentication; `fxg` runs it with the work AI Gateway credential. The `codex` wrapper also uses the work credential. Personal does not install those settings or inject work credentials. Automatic work-to-personal switching is refused.
 
 ## Files
 
-- `config/`: shared home-directory preferences for Git, editors, and pnpm. Linked separately with Stow; Claude instructions are linked only for work.
+- `config/`: shared home-directory preferences for Ghostty, Git, editors, and pnpm. Linked separately with Stow; Claude instructions are linked only for work.
 - `shell/common.zsh`: shared aliases, paths, plugins, and helpers.
+- `shell/theme.zsh`: shared Vercel palette and single-line directory/Git/triangle prompt.
 - `shell/init.zsh`: loads common settings, the selected profile, and optional `~/.config/dotfiles/local.zsh`.
 - `profiles/work/` and `profiles/personal/`: profile-specific shell and application settings.
 - `utils/profile.sh`: profile selection, compatible with Bash and Zsh.
 - `utils/profiles.sh`: small installer, compatible with macOS system Bash 3.2.
 
 Only the individual Claude/Codex config files are linked. Auth, sessions, caches, plugins, skills, and local tool settings are left alone. Secrets stay outside Git and are fetched only when invoking a work tool.
+
+## Terminal appearance
+
+Both work and personal use the same Vercel-inspired setup, based on the [Geist terminal guide](https://vercel.com/geist/terminal). No demo or experiment helpers are loaded or retained.
+
+The single-line prompt shows only the current directory name in bold teal and the Git branch in parentheses: `project (main) ▲`. The entire `(branch)` is amber for staged, unstaged, or untracked changes; otherwise green when local commits are ahead of the configured upstream, and gray when not ahead or no upstream is configured. Uncommitted changes take priority over unpushed commits. There is no asterisk. Ahead status uses the locally known upstream without fetching on each prompt; it does not separately flag a branch that is only behind. Outside Git, the branch is omitted. Detached HEAD shows its short commit instead. The triangle turns red after a failed command. Autosuggestions use the quiet palette color.
+
+Shared Zsh applies the 16 Geist ANSI accent colors to interactive terminals, including Rex, at startup. It leaves base foreground/background colors to the terminal app and resets earlier shell overrides to app defaults. It selects the light or dark accent palette from macOS appearance. The white blinking cursor is reasserted at every prompt and line-edit entry because programs can reset cursor settings. Font, padding, selection colors, and app chrome are terminal-app settings rather than Zsh settings.
+
+Ghostty's shared config uses the installed Geist Mono at 14pt, 16pt balanced padding, Geist light/dark accent palettes with app-default base colors, and a white blinking cursor. Shared Zsh also requests a white blinking cursor in other supporting terminals. Link it on each Mac with `dot link-shared --dry-run`, then `dot link-shared` after reviewing any conflicts. The existing macOS Application Support config remains separate for local keybindings and other overrides. Ghostty reloads with `Cmd+Shift+,`; open a new tab for the new shell prompt. In other apps, open a new Zsh tab or run `exec zsh` to pick up the shared prompt and colors. Rex's native UI theme/font preferences are not changed by the shell palette.
+
+This uses native Zsh and the existing Geist Mono font, not Starship or the Nerd Font variant. No extra packages are required.
 
 ## Local shell and existing configs
 

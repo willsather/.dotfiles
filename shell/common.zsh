@@ -1,11 +1,11 @@
 # zsh configuration directory (keep all generated files organized)
 export ZSH_CONFIG="$HOME/.dotfiles/.zsh"
-export ZSH_COMPDUMP="$ZSH_CONFIG/.zcompdump"
+export ZSH_COMPDUMP="$ZSH_CONFIG/.zcompdump-${ZSH_VERSION}"
 export ZSH_CACHE_DIR="$ZSH_CONFIG/cache"
 
 # oh-my-zsh configuration
 export ZSH="$ZSH_CONFIG/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME=""
 
 # create config directories if they don't exist
 [[ ! -d "$ZSH_CONFIG" ]] && mkdir -p "$ZSH_CONFIG"
@@ -42,10 +42,6 @@ else
     echo "oh-my-zsh not found at $ZSH"
     echo "run 'dot init' to install oh-my-zsh and set up your dotfiles"
 fi
-
-# override git indicator (custom theme modifications)
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%})%{$reset_color%} ▲"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})%{$reset_color%} ▲"
 
 # environment variables
 export EDITOR="nvim"
@@ -124,3 +120,5 @@ mkcd() {
 
 # dotfiles management
 export PATH="$HOME/.dotfiles/bin:$PATH"
+
+source "${${(%):-%x}:A:h}/theme.zsh"
