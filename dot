@@ -120,11 +120,21 @@ install_packages() {
     cd "$DOTFILES_DIR"
 
     if [[ -f "$BREWFILE" ]]; then
-        if [[ "$VERBOSE" == true ]]; then
-            brew bundle install --verbose
-        else
-            brew bundle install --quiet
+        source "$DOTFILES_DIR/utils/profile.sh"
+        local profile
+        profile="$(dotfiles_profile)"
+        [[ -n "$profile" ]] || { log_error "select a profile before installing packages"; return 1; }
+        local brewfiles=("$BREWFILE") brewfile
+        if [[ -f "$DOTFILES_DIR/profiles/$profile/Brewfile" ]]; then
+            brewfiles+=("$DOTFILES_DIR/profiles/$profile/Brewfile")
         fi
+        for brewfile in "${brewfiles[@]}"; do
+            if [[ "$VERBOSE" == true ]]; then
+                brew bundle install --file="$brewfile" --verbose
+            else
+                brew bundle install --file="$brewfile" --quiet
+            fi
+        done
         log_success "all packages installed successfully"
     else
         log_error "brewfile not found at $BREWFILE"
@@ -152,7 +162,14 @@ stow_dotfiles() {
 
     log_info "stowing files from ${config_dir} to ${HOME}..."
 
+    source "$DOTFILES_DIR/utils/profile.sh"
+    local profile
+    profile="$(dotfiles_profile)"
+    [[ -n "$profile" ]] || { log_error "select a profile before linking shared configs"; return 1; }
     local stow_flags=(-R --no-folding)
+    if [[ "$profile" == personal ]]; then
+        stow_flags+=(--ignore='^\.claude$' --ignore='^\.codex$')
+    fi
     if [[ "${1:-}" == "--dry-run" ]]; then
         stow_flags+=(-n)
     elif [[ $# -gt 0 ]]; then

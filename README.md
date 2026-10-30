@@ -36,7 +36,7 @@ Work uses Claude/Codex settings and credential wrappers under `profiles/work/`. 
 
 ## Files
 
-- `config/`: shared home-directory preferences for Git, editors, pnpm, and general Claude instructions. Linked separately with Stow.
+- `config/`: shared home-directory preferences for Git, editors, and pnpm. Linked separately with Stow; Claude instructions are linked only for work.
 - `shell/common.zsh`: shared aliases, paths, plugins, and helpers.
 - `shell/init.zsh`: loads common settings, the selected profile, and optional `~/.config/dotfiles/local.zsh`.
 - `profiles/work/` and `profiles/personal/`: profile-specific shell and application settings.
@@ -75,8 +75,8 @@ dot link-shared --dry-run
 dot link-shared
 ```
 
-It excludes `.zshrc` and work AI settings and does not link whole directories. It was not run during the work-profile migration.
+It excludes `.zshrc` and work AI settings and does not link whole directories. Personal also excludes all Claude/Codex configs so linking cannot recreate their home directories. It was not run during the work-profile migration.
 
 `dot bootstrap --profile personal` is the explicit full setup: Homebrew/packages, Oh My Zsh, shared linking, and macOS defaults. Review `Brewfile` and `macos/defaults.sh` first; do not use it for small changes on a managed work machine. Its `--dry-run` option is rejected because it cannot preview every system effect.
 
-Existing package commands remain available: `dot add`, `dot remove`, `dot list`, `dot dump`, and `dot upgrade`. The Brewfile is not split by profile. Avoid `dot cleanup` on managed Macs: it can remove installed packages outside the Brewfile without distinguishing company-owned software.
+Existing package commands remain available: `dot add`, `dot remove`, `dot list`, `dot dump`, and `dot upgrade`. The root `Brewfile` contains shared packages. Bootstrap also installs `profiles/<profile>/Brewfile` when present; Claude Code is work-only in `profiles/work/Brewfile`. Personal does not install Claude or Codex. A direct `brew bundle` in the repo installs only shared packages. Avoid `dot cleanup` on managed Macs: it can remove installed packages outside the Brewfile without distinguishing company-owned software.
