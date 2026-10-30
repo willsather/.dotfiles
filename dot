@@ -5,7 +5,7 @@ set -e
 # dotfiles management script
 # provides commands: init, add, remove, list, cleanup
 
-DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 BREWFILE="$DOTFILES_DIR/Brewfile"
 
 # global verbose flag
@@ -152,12 +152,21 @@ stow_dotfiles() {
 
     log_info "stowing files from ${config_dir} to ${HOME}..."
 
-    local stow_flags=(-R)
+    local stow_flags=(-R --no-folding)
+    if [[ "${1:-}" == "--dry-run" ]]; then
+        stow_flags+=(-n)
+    elif [[ $# -gt 0 ]]; then
+        log_error "usage: dot link-shared [--dry-run]"
+        return 1
+    fi
     if [[ "$VERBOSE" == true ]]; then
         stow_flags+=(-v)
     fi
 
     if stow "${stow_flags[@]}" \
+            --ignore='^\.zshrc$' \
+            --ignore='^\.claude/settings\.json$' \
+            --ignore='^\.codex/config\.toml$' \
             --ignore='\.DS_Store' \
             --ignore='\.git' \
             --ignore='\.gitignore' \
@@ -398,7 +407,11 @@ options:
     --verbose, -v               show verbose output from brew, stow, and macos commands
 
 commands:
-    init                        initialize dotfiles (install all packages, stow configs, setup macos)
+    init --profile <profile>    configure shell + work/personal tools only; supports --dry-run
+    apply [--dry-run]           reapply selected profile; no package or macos changes
+    doctor                     check profile configuration without changing files
+    link-shared [--dry-run]     explicitly link shared editor/git/tool preferences with stow
+    bootstrap --profile <name>  full setup: packages, shared configs, and macos defaults
     add <package> [type]        add and install a package (type: brew, cask, tap, mas)
     add <name> mas <id>         add mac app store app with id
     remove <package> [type]     remove and uninstall a package
@@ -409,8 +422,12 @@ commands:
     help                        show this help message
 
 examples:
-    dot init
-    dot --verbose init
+    dot init --profile work --dry-run
+    dot init --profile work
+    dot init --profile personal
+    dot apply --dry-run
+    dot doctor
+    dot link-shared --dry-run
     dot add git
     dot -v add docker cask
     dot add homebrew/cask-fonts tap
@@ -449,7 +466,24 @@ set -- "${ARGS[@]}"
 
 # main command processing
 case "${1:-help}" in
-    init)
+    init|apply|doctor)
+        profile_command="$1"
+        shift
+        exec /bin/bash "$DOTFILES_DIR/utils/profiles.sh" "$profile_command" "$@"
+        ;;
+    link-shared)
+        shift
+        stow_dotfiles "$@"
+        ;;
+    bootstrap)
+        shift
+        for argument in "$@"; do
+            if [[ "$argument" == "--dry-run" ]]; then
+                log_error "bootstrap has system-wide side effects; use dot init --dry-run for a config-only preview"
+                exit 1
+            fi
+        done
+        /bin/bash "$DOTFILES_DIR/utils/profiles.sh" init "$@"
         check_macos
         install_homebrew
         setup_dot_command

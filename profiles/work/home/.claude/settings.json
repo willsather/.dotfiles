@@ -5,6 +5,25 @@
     "ANTHROPIC_BASE_URL": "https://ai-gateway.vercel.sh",
     "ANTHROPIC_API_KEY": ""
   },
+  "sandbox": {
+    "enabled": false,
+    "allowUnsandboxedCommands": true,
+    "network": {
+      "allowedDomains": [
+        "*",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "api.vercel.com",
+        "vercel.com",
+        "*.vercel.com",
+        "registry.npmjs.org",
+        "registry.k8s.vercel.security"
+      ],
+      "allowUnixSockets": [
+        "/Users/willsather/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      ]
+    }
+  },
   "enabledPlugins": {
     "vercel-plugin@vercel-vercel-plugin": true,
     "vercel@claude-plugins-official": true
